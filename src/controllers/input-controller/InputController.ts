@@ -1,6 +1,7 @@
 import { InputModel } from '@/models';
 import { getErrorMessage, InputArgs } from '@/utils';
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 
 export const getInputController = async (
   req: Request,
@@ -8,7 +9,6 @@ export const getInputController = async (
 ): Promise<void> => {
   try {
     const inputs: InputArgs[] = await InputModel.find();
-    console.log(inputs);
     res.status(200).json(inputs);
   } catch (error: any) {
     res.status(404).json({ message: getErrorMessage(error) });
@@ -25,6 +25,25 @@ export const postInputController = async (
   try {
     await newInput.save();
     res.status(201).json(newInput);
+  } catch (error) {
+    res.status(209).json({ message: getErrorMessage(error) });
+  }
+};
+
+export const deleteInputController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (id === undefined) {
+    return res.status(404).send('ID undefined');
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).send('No input field with that id');
+  }
+
+  try {
+    await InputModel.findByIdAndRemove(id);
+    res.json({ message: 'Input deleted successfully' });
   } catch (error) {
     res.status(209).json({ message: getErrorMessage(error) });
   }

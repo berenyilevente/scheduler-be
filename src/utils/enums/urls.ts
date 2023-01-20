@@ -1,4 +1,5 @@
 export enum ApiUrl {
-  GetInput = 'input',
+  GetInput = 'get-input',
   PostInput = 'post-input',
+  DeleteInput = 'delete-input',
 }

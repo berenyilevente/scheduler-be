@@ -2,7 +2,13 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import { getInputRouter, postInputRouter, deleteInputRouter } from './routes';
+import {
+  getInputRouter,
+  postInputRouter,
+  deleteInputRouter,
+  getBookingLayoutRouter,
+  postBookingLayoutRouter,
+} from './routes';
 import { ApiUrl } from './utils';
 import bodyParser from 'body-parser';
 
@@ -21,6 +27,8 @@ app.get('/', (req, res) => {
 app.use(`/${ApiUrl.GetInput}`, getInputRouter);
 app.use(`/${ApiUrl.PostInput}`, postInputRouter);
 app.use(`/${ApiUrl.DeleteInput}`, deleteInputRouter);
+app.use(`/${ApiUrl.GetBookingLayout}`, getBookingLayoutRouter);
+app.use(`/${ApiUrl.PostBookingLayout}`, postBookingLayoutRouter);
 
 mongoose
   .connect(MONGO_CONNECTION_URL)

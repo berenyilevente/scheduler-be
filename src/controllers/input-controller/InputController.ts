@@ -1,4 +1,4 @@
-import { InputModel } from '@/models';
+import { BookingLayoutModel, InputModel } from '@/models';
 import { getErrorMessage, InputArgs } from '@/utils';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';

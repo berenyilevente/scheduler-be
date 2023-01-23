@@ -9,6 +9,8 @@ import {
   getBookingLayoutRouter,
   postBookingLayoutRouter,
   getBookingLayoutByIdRouter,
+  delteInputFromBookingLayoutRouter,
+  deleteBookingLayoutRouter,
 } from './routes';
 import { ApiUrl } from './utils';
 import bodyParser from 'body-parser';
@@ -28,9 +30,11 @@ app.get('/', (req, res) => {
 app.use(`/${ApiUrl.GetInput}`, getInputRouter);
 app.use(`/${ApiUrl.PostInput}`, postInputRouter);
 app.use(`/${ApiUrl.DeleteInput}`, deleteInputRouter);
-app.use(`/${ApiUrl.GetBookingLayout}`, getBookingLayoutRouter);
-app.use(`/${ApiUrl.GetBookingLayoutById}`, getBookingLayoutByIdRouter);
-app.use(`/${ApiUrl.PostBookingLayout}`, postBookingLayoutRouter);
+app.use(`/`, getBookingLayoutRouter);
+app.use(`/`, getBookingLayoutByIdRouter);
+app.use(`/`, postBookingLayoutRouter);
+app.use(`/`, delteInputFromBookingLayoutRouter);
+app.use(`/`, deleteBookingLayoutRouter);
 
 mongoose
   .connect(MONGO_CONNECTION_URL)

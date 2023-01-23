@@ -5,4 +5,6 @@ export enum ApiUrl {
   GetBookingLayout = 'get-booking-layout',
   GetBookingLayoutById = 'get-booking-layout-by-id',
   PostBookingLayout = 'post-booking-layout',
+  DeleteInputFromBookingLayout = 'delete-input-from-booking-layout',
+  DeleteBookingLayout = 'delete-booking-layout',
 }

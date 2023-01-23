@@ -1,2 +1,2 @@
 export * from './input-router/InputRouter';
-export * from './booking-layout-controller/BookingLayoutController';
+export * from './booking-layout-router/BookingLayoutRouter';

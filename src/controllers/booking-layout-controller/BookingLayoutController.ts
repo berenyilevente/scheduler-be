@@ -41,9 +41,30 @@ export const postBookingLayoutController = async (
   const bookingLayout: BookingLayoutArgs = req.body;
   const newBookingLayout = new BookingLayoutModel(bookingLayout);
 
+  console.log(bookingLayout);
+
   try {
     await newBookingLayout.save();
     res.status(201).json(newBookingLayout);
+  } catch (error) {
+    res.status(209).json({ message: getErrorMessage(error) });
+  }
+};
+
+export const patchBookingLayoutController = async (
+  req: Request,
+  res: Response
+) => {
+  const { id } = req.params;
+  const bookingLayout: BookingLayoutArgs = req.body;
+
+  try {
+    const updatedBookingLayout = await BookingLayoutModel.findByIdAndUpdate(
+      id,
+      bookingLayout,
+      { new: true }
+    );
+    res.json(updatedBookingLayout);
   } catch (error) {
     res.status(209).json({ message: getErrorMessage(error) });
   }
@@ -54,7 +75,6 @@ export const deleteInputFromBookingLayoutController = async (
   res: Response
 ) => {
   const deleteId: { bookingLayoutId: string; inputId: string } = req.body;
-  console.log(deleteId);
   if (deleteId === undefined) {
     return res.status(404).send('ID is undefined');
   }

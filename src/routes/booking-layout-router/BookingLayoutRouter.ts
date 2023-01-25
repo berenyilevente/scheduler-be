@@ -4,32 +4,40 @@ import {
   getBookingLayoutByIdController,
   deleteInputFromBookingLayoutController,
   deleteBookingLayoutController,
+  patchBookingLayoutController,
 } from '@/controllers';
 import { ApiUrl } from '@/utils';
 import express, { Router } from 'express';
 
-const router: Router = express.Router();
+const bookingLayoutRouter: Router = express.Router();
 
-export const getBookingLayoutRouter: Router = router.get(
+bookingLayoutRouter.get(
   `/${ApiUrl.GetBookingLayout}`,
   getBookingLayoutController
 );
 
-export const getBookingLayoutByIdRouter: Router = router.get(
+bookingLayoutRouter.get(
   `/${ApiUrl.GetBookingLayoutById}/:id`,
   getBookingLayoutByIdController
 );
 
-export const postBookingLayoutRouter: Router = router.post(
+bookingLayoutRouter.post(
   `/${ApiUrl.PostBookingLayout}`,
   postBookingLayoutController
 );
 
-export const delteInputFromBookingLayoutRouter: Router = router.post(
+bookingLayoutRouter.post(
   `/${ApiUrl.DeleteInputFromBookingLayout}`,
   deleteInputFromBookingLayoutController
 );
-export const deleteBookingLayoutRouter: Router = router.delete(
+bookingLayoutRouter.delete(
   `/${ApiUrl.DeleteBookingLayout}/:id`,
   deleteBookingLayoutController
 );
+
+bookingLayoutRouter.patch(
+  `/${ApiUrl.PatchBookingLayout}/:id`,
+  patchBookingLayoutController
+);
+
+export default bookingLayoutRouter;

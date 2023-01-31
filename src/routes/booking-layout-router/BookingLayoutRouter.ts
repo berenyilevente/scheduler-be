@@ -8,36 +8,42 @@ import {
 } from '@/controllers';
 import { ApiUrl } from '@/utils';
 import express, { Router } from 'express';
+import authMiddleware from '@/middleware/authMiddleware';
 
-const bookingLayoutRouter: Router = express.Router();
+export const bookingLayoutRouter: Router = express.Router();
 
 bookingLayoutRouter.get(
   `/${ApiUrl.GetBookingLayout}`,
+  authMiddleware,
   getBookingLayoutController
 );
 
 bookingLayoutRouter.get(
   `/${ApiUrl.GetBookingLayoutById}/:id`,
+  authMiddleware,
   getBookingLayoutByIdController
 );
 
 bookingLayoutRouter.post(
   `/${ApiUrl.PostBookingLayout}`,
+  authMiddleware,
   postBookingLayoutController
 );
 
 bookingLayoutRouter.post(
   `/${ApiUrl.DeleteInputFromBookingLayout}`,
+  authMiddleware,
   deleteInputFromBookingLayoutController
 );
+
 bookingLayoutRouter.delete(
   `/${ApiUrl.DeleteBookingLayout}/:id`,
+  authMiddleware,
   deleteBookingLayoutController
 );
 
 bookingLayoutRouter.patch(
   `/${ApiUrl.PatchBookingLayout}/:id`,
+  authMiddleware,
   patchBookingLayoutController
 );
-
-export default bookingLayoutRouter;

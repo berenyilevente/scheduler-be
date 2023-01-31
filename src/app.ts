@@ -2,27 +2,25 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import { getInputRouter, postInputRouter, deleteInputRouter } from './routes';
-import { ApiUrl } from './utils';
 import bodyParser from 'body-parser';
-import bookingLayoutRouter from './routes/booking-layout-router/BookingLayoutRouter';
+import { bookingLayoutRouter, authRouter } from '@/routes';
+import { Request, Response, Express } from 'express';
 
 dotenv.config();
 
-const app = express();
+const app: Express = express();
 const PORT: string | number = process.env.APP_PORT || 8000;
 const MONGO_CONNECTION_URL: string = process.env.CONNECTION_URL || '';
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to scheduler API');
 });
-app.use(`/${ApiUrl.GetInput}`, getInputRouter);
-app.use(`/${ApiUrl.PostInput}`, postInputRouter);
-app.use(`/${ApiUrl.DeleteInput}`, deleteInputRouter);
+
 app.use(`/`, bookingLayoutRouter);
+app.use(`/`, authRouter);
 
 mongoose
   .connect(MONGO_CONNECTION_URL)

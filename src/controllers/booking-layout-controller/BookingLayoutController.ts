@@ -41,8 +41,6 @@ export const postBookingLayoutController = async (
   const bookingLayout: BookingLayoutArgs = req.body;
   const newBookingLayout = new BookingLayoutModel(bookingLayout);
 
-  console.log(bookingLayout);
-
   try {
     await newBookingLayout.save();
     res.status(201).json(newBookingLayout);

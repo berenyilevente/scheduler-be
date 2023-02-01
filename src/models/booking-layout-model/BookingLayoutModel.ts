@@ -9,6 +9,11 @@ const bookingLayoutSchema = new mongoose.Schema({
     },
   ],
   name: String,
+  userId: String,
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 export const BookingLayoutModel = mongoose.model(

@@ -1,8 +1,9 @@
 import { UserModel } from '@/models';
-import { RegisterArgs, LoginArgs, signToken } from '@/utils';
+import { RegisterArgs, LoginArgs, signToken, UserArgs } from '@/utils';
 import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import dotenv from 'dotenv';
+import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 const secret: string = process.env.SECRET || 'secret';
@@ -34,9 +35,9 @@ export const userLoginController = async (req: Request, res: Response) => {
       expiration
     );
 
-    res.status(200).json({ user: existingUser, accessToken });
+    return res.status(200).json({ user: existingUser, accessToken });
   } catch (error) {
-    res.status(500).json({ message: 'Something went wrong' });
+    return res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
@@ -56,10 +57,12 @@ export const userRegisterController = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
+    const apiKey = uuidv4();
 
     const newUser = await UserModel.create({
       email: email,
       password: hashedPassword,
+      apiKey: apiKey,
     });
 
     const accessToken = signToken(
@@ -69,9 +72,25 @@ export const userRegisterController = async (req: Request, res: Response) => {
       expiration
     );
 
-    res.status(200).json({ result: newUser, accessToken });
+    return res.status(200).json({ result: newUser, accessToken });
   } catch (error) {
-    res.status(500).json({ message: 'Something went wrong' });
+    return res.status(500).json({ message: 'Something went wrong' });
   }
   return;
+};
+
+export const getUserController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const user: UserArgs | null = await UserModel.findById(id);
+
+    if (user === null) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json(user);
+  } catch (error: any) {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
 };

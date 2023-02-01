@@ -8,7 +8,10 @@ export const getBookingLayoutController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const bookingLayouts: BookingLayoutArgs[] = await BookingLayoutModel.find();
+    const userId = req.body.userId;
+    const bookingLayouts: BookingLayoutArgs[] = await BookingLayoutModel.find({
+      userId,
+    });
     res.status(200).json(bookingLayouts);
   } catch (error: any) {
     res.status(404).json({ message: getErrorMessage(error) });
@@ -39,7 +42,11 @@ export const postBookingLayoutController = async (
   res: Response
 ): Promise<void> => {
   const bookingLayout: BookingLayoutArgs = req.body;
-  const newBookingLayout = new BookingLayoutModel(bookingLayout);
+  const newBookingLayout = new BookingLayoutModel({
+    ...bookingLayout,
+    userId: req.body.userId,
+    createdAt: new Date().toISOString(),
+  });
 
   try {
     await newBookingLayout.save();

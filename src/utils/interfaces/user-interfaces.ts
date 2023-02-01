@@ -8,3 +8,8 @@ export interface RegisterArgs {
   password: string;
   confirmPassword: string;
 }
+
+export interface UserArgs {
+  email: string;
+  apiKey: string;
+}

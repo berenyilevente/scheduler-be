@@ -10,12 +10,14 @@ export default function authMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const token = req.headers['x-access-token'] as string;
-  if (!token) {
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (token === undefined) {
     return res.status(401).send({
       message: 'Unauthorized: No token provided',
     });
   }
+
   try {
     const decoded: JwtPayload = jwt.verify(token, secretKey) as JwtPayload;
     req.body.userId = decoded.id;

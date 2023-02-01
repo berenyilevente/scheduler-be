@@ -10,4 +10,5 @@ export enum ApiUrl {
   PatchBookingLayout = 'patch-booking-layout',
   Login = 'login',
   Register = 'register',
+  GetUser = 'get-user',
 }

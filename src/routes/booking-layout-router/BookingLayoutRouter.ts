@@ -5,6 +5,7 @@ import {
   deleteInputFromBookingLayoutController,
   deleteBookingLayoutController,
   patchBookingLayoutController,
+  getBookingForUserController,
 } from '@/controllers';
 import { ApiUrl } from '@/utils';
 import express, { Router } from 'express';
@@ -20,7 +21,6 @@ bookingLayoutRouter.get(
 
 bookingLayoutRouter.get(
   `/${ApiUrl.GetBookingLayoutById}/:id`,
-  authMiddleware,
   getBookingLayoutByIdController
 );
 
@@ -46,4 +46,9 @@ bookingLayoutRouter.patch(
   `/${ApiUrl.PatchBookingLayout}/:id`,
   authMiddleware,
   patchBookingLayoutController
+);
+
+bookingLayoutRouter.get(
+  `/${ApiUrl.GetBookingLayoutUser}?`,
+  getBookingForUserController
 );

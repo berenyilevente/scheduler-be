@@ -8,8 +8,9 @@ const bookingLayoutSchema = new mongoose.Schema({
       required: Boolean,
     },
   ],
-  name: String,
+  name: { type: String, required: true, unique: true },
   userId: String,
+  apiKey: String,
   createdAt: {
     type: Date,
     default: new Date(),

@@ -1,4 +1,4 @@
-export enum InputComponent {
+export enum InputType {
   Email = 'email_input',
   Calendar = 'calendar_input',
   Dropdown = 'dropdown_input',

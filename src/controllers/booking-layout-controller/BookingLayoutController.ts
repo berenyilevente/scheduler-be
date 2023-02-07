@@ -1,10 +1,5 @@
 import { BookingLayoutModel, UserModel } from '@/models';
-import {
-  BookingLayoutArgs,
-  BookingLayoutUser,
-  getErrorMessage,
-  UserArgs,
-} from '@/utils';
+import { BookingLayoutArgs, getErrorMessage, UserArgs } from '@/utils';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 
@@ -47,9 +42,9 @@ export const postBookingLayoutController = async (
   res: Response
 ) => {
   try {
-    const bookingLayout: BookingLayoutArgs = req.body;
-    const name = bookingLayout.name;
+    const bookingLayout: BookingLayoutArgs = req.body.bookingLayout;
     const userId: string = req.body.userId;
+    const name = bookingLayout.name;
     const user: UserArgs | null = await UserModel.findById(userId);
     const existingBookingLayout = await BookingLayoutModel.findOne({ name });
 
@@ -82,15 +77,21 @@ export const patchBookingLayoutController = async (
   req: Request,
   res: Response
 ) => {
-  try {
-    const { id } = req.params;
-    const bookingLayout: BookingLayoutArgs = req.body;
+  const { id } = req.params;
+  const bookingLayout: BookingLayoutArgs = req.body;
 
+  //Removes the id which was sent by the frontend. Needs to be solved more elegantly.
+  bookingLayout.inputs.forEach((obj) => {
+    delete obj['_id'];
+  });
+
+  try {
     const updatedBookingLayout = await BookingLayoutModel.findByIdAndUpdate(
       id,
       bookingLayout,
       { new: true }
     );
+
     res.json(updatedBookingLayout);
   } catch (error) {
     res.status(209).json({ message: getErrorMessage(error) });

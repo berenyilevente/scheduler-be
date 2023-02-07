@@ -13,4 +13,7 @@ export enum ApiUrl {
   GetUser = 'get-user',
   GetBookingLayoutUser = 'get-booking-layout-user',
   RefreshToken = 'refresh-token',
+  GetBookings = 'get-bookings',
+  GetBookingById = 'get-booking-by-id',
+  PostBooking = 'post-booking',
 }

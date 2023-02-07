@@ -11,5 +11,4 @@ export interface RegisterArgs {
 
 export interface UserArgs {
   email: string;
-  apiKey: string;
 }

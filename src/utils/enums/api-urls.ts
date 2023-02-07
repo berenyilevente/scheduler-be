@@ -12,4 +12,5 @@ export enum ApiUrl {
   Register = 'register',
   GetUser = 'get-user',
   GetBookingLayoutUser = 'get-booking-layout-user',
+  RefreshToken = 'refresh-token',
 }

@@ -7,5 +7,4 @@ export interface BookingLayoutArgs {
 
 export interface BookingLayoutUser {
   name: string;
-  apiKey: string;
 }

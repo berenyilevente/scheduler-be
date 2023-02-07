@@ -11,7 +11,6 @@ export default function authMiddleware(
   next: NextFunction
 ) {
   const token = req.headers.authorization?.split(' ')[1];
-
   if (token === undefined) {
     return res.status(401).send({
       message: 'Unauthorized: No token provided',
@@ -23,8 +22,8 @@ export default function authMiddleware(
     req.body.userId = decoded.id;
     next();
   } catch (error) {
-    return res.status(400).send({
-      message: 'Invalid token',
+    return res.status(401).send({
+      message: 'Unauthorized, Invalid token',
     });
   }
 }

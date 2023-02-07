@@ -48,8 +48,10 @@ export const postBookingLayoutController = async (
 ) => {
   try {
     const bookingLayout: BookingLayoutArgs = req.body;
+    const name = bookingLayout.name;
     const userId: string = req.body.userId;
     const user: UserArgs | null = await UserModel.findById(userId);
+    const existingBookingLayout = await BookingLayoutModel.findOne({ name });
 
     if (user === null) {
       return res
@@ -57,7 +59,7 @@ export const postBookingLayoutController = async (
         .json({ message: 'No associated user found for this booking layout' });
     }
 
-    if (bookingLayout.name === req.body.name) {
+    if (existingBookingLayout) {
       return res
         .status(400)
         .json({ message: 'Booking layout with that name already exists' });
@@ -67,7 +69,6 @@ export const postBookingLayoutController = async (
       ...bookingLayout,
       userId: req.body.userId,
       createdAt: new Date().toISOString(),
-      apiKey: user.apiKey,
     });
 
     await newBookingLayout.save();
@@ -140,23 +141,5 @@ export const deleteBookingLayoutController = async (
     res.json({ message: 'Booking Layout deleted successfully' });
   } catch (error) {
     res.status(209).json({ message: getErrorMessage(error) });
-  }
-};
-
-export const getBookingForUserController = async (
-  req: Request,
-  res: Response
-) => {
-  try {
-    const bookingData = req.query;
-    const bookingLayout: BookingLayoutArgs | null =
-      await BookingLayoutModel.findOne({
-        apiKey: bookingData.apiKey,
-        name: bookingData.name,
-      });
-
-    return res.status(200).json(bookingLayout);
-  } catch (error: any) {
-    res.status(404).json({ message: getErrorMessage(error) });
   }
 };

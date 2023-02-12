@@ -24,7 +24,7 @@ bookingRouter.get(
 bookingRouter.post(`/${ApiUrl.PostBooking}`, postBookingController);
 
 bookingRouter.delete(
-  `/${ApiUrl.PostBooking}`,
+  `/${ApiUrl.DeleteBooking}/:id`,
   authMiddleware,
   deleteBookingController
 );

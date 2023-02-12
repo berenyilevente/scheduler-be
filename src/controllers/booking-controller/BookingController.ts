@@ -1,5 +1,5 @@
 import { BookingModel } from '@/models';
-import { Booking, getErrorMessage } from '@/utils';
+import { Booking, getErrorMessage, InputType } from '@/utils';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 

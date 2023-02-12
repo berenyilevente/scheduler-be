@@ -1,9 +1,8 @@
-import { UserModel, RefreshTokenModel } from '@/models';
+import { AuthModel, RefreshTokenModel } from '@/models';
 import { RegisterArgs, LoginArgs, signToken, UserArgs } from '@/utils';
 import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import dotenv from 'dotenv';
-import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 
 dotenv.config();
@@ -13,7 +12,7 @@ export const userLoginController = async (req: Request, res: Response) => {
   const { email, password }: LoginArgs = req.body;
 
   try {
-    const existingUser = await UserModel.findOne({ email });
+    const existingUser = await AuthModel.findOne({ email });
 
     if (!existingUser) {
       return res.status(404).json({ message: 'User doesn´t exist' });
@@ -65,7 +64,7 @@ export const userRegisterController = async (req: Request, res: Response) => {
 
   //console.log(email, password, confirmPassword);
   try {
-    const existingUser = await UserModel.findOne({ email });
+    const existingUser = await AuthModel.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({ message: 'User already exist' });
@@ -77,7 +76,7 @@ export const userRegisterController = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const newUser = await UserModel.create({
+    const newUser = await AuthModel.create({
       email: email,
       password: hashedPassword,
     });
@@ -94,7 +93,7 @@ export const getUserController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const user: UserArgs | null = await UserModel.findById(id);
+    const user: UserArgs | null = await AuthModel.findById(id);
 
     if (user === null) {
       return res.status(404).json({ message: 'User not found' });

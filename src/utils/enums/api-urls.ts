@@ -16,4 +16,7 @@ export enum ApiUrl {
   GetBookings = 'get-bookings',
   GetBookingById = 'get-booking-by-id',
   PostBooking = 'post-booking',
+  DeleteBooking = 'delete-booking',
+  GetWorkingHours = 'get-working-hours',
+  PostWorkingHours = 'post-working-hours',
 }

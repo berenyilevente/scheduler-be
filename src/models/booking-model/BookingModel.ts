@@ -7,6 +7,10 @@ const bookingModelSchema = new mongoose.Schema({
       value: String,
     },
   ],
+  bookedTimes: {
+    date: String,
+    time: String,
+  },
   bookingId: mongoose.Types.ObjectId,
 });
 

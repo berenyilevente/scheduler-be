@@ -1,4 +1,4 @@
-import { BookingLayoutModel, UserModel } from '@/models';
+import { BookingLayoutModel, AuthModel } from '@/models';
 import { BookingLayoutArgs, getErrorMessage, UserArgs } from '@/utils';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
@@ -44,8 +44,9 @@ export const postBookingLayoutController = async (
   try {
     const bookingLayout: BookingLayoutArgs = req.body.bookingLayout;
     const userId: string = req.body.userId;
+
     const name = bookingLayout.name;
-    const user: UserArgs | null = await UserModel.findById(userId);
+    const user: UserArgs | null = await AuthModel.findById(userId);
     const existingBookingLayout = await BookingLayoutModel.findOne({ name });
 
     if (user === null) {

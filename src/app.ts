@@ -3,9 +3,13 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { bookingLayoutRouter, authRouter } from '@/routes';
+import {
+  bookingLayoutRouter,
+  authRouter,
+  bookingRouter,
+  settingsRouter,
+} from '@/routes';
 import { Request, Response, Express } from 'express';
-import { bookingRouter } from './routes/booking-router/BookingRouter';
 
 dotenv.config();
 
@@ -23,6 +27,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use(`/`, bookingLayoutRouter);
 app.use(`/`, authRouter);
 app.use(`/`, bookingRouter);
+app.use(`/`, settingsRouter);
 
 mongoose
   .connect(MONGO_CONNECTION_URL)
